@@ -1,0 +1,4 @@
+package br.com.barbearia.exception;
+public class BusinessException extends RuntimeException {
+    public BusinessException(String message) { super(message); }
+}

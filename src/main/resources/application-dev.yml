@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/barbearia
+    username: postgres
+    password: 1981
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+jwt:
+  secret: "barbearia-api-chave-secreta-para-jwt-2026-java-21-com-mais-de-32-bytes"
+  expiration: 86400000
