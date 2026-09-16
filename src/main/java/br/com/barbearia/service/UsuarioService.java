@@ -18,20 +18,22 @@ public class UsuarioService {
             throw new BusinessException("Já existe um usuário cadastrado com este telefone");
 
         Usuario usuario = Usuario.builder()
-            .nome(request.nome()).apelido(request.apelido()).telefone(telefone).build();
+                .nome(request.nome()).apelido(request.apelido()).telefone(telefone).build();
         usuario = usuarioRepository.save(usuario);
         return toResponse(usuario);
     }
 
     public Usuario buscarPorId(Long id) {
         return usuarioRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
     }
 
-    private String normalizarTelefone(String telefone) { return telefone.replaceAll("\\D", ""); }
+    private String normalizarTelefone(String telefone) {
+        return telefone.replaceAll("\\D", "");
+    }
 
     private UsuarioResponseDTO toResponse(Usuario usuario) {
         return new UsuarioResponseDTO(usuario.getId(), usuario.getNome(), usuario.getApelido(),
-            usuario.getTelefone(), usuario.getPerfil().name());
+                usuario.getTelefone(), usuario.getPerfil().name());
     }
 }
