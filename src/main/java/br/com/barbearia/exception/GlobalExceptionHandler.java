@@ -1,7 +1,10 @@
 package br.com.barbearia.exception;
 
 import org.springframework.http.*;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -27,5 +30,13 @@ public class GlobalExceptionHandler {
             .forEach(error -> fields.put(error.getField(), error.getDefaultMessage()));
         return ResponseEntity.badRequest()
             .body(new ErrorResponse(LocalDateTime.now(), 400, "VALIDATION_ERROR", "Erro de validação", fields));
+    }
+
+    @ExceptionHandler({HttpMessageNotReadableException.class, MissingServletRequestParameterException.class,
+            MethodArgumentTypeMismatchException.class})
+    public ResponseEntity<ErrorResponse> handleBadRequest(Exception ex) {
+        return ResponseEntity.badRequest()
+            .body(new ErrorResponse(LocalDateTime.now(), 400, "BAD_REQUEST",
+                "Requisição inválida: verifique os dados enviados", null));
     }
 }

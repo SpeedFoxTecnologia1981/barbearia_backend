@@ -16,7 +16,9 @@ public class AuthService {
 
     public LoginResponseDTO login(LoginRequestDTO request) {
         String telefone = request.telefone().replaceAll("\\D", "");
-        Usuario usuario = usuarioRepository.findByNomeAndTelefone(request.nome(), telefone)
+        String nome = request.nome().trim();
+        Usuario usuario = usuarioRepository.findByTelefone(telefone)
+            .filter(u -> u.getNome().trim().equalsIgnoreCase(nome))
             .orElseThrow(() -> new BusinessException("Nome ou telefone inválido"));
 
         if (!Boolean.TRUE.equals(usuario.getAtivo()))
