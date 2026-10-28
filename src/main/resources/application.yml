@@ -8,3 +8,18 @@ server:
   port: 8080
   servlet:
     context-path: /api
+
+# ---------------------------------------------------------------------------
+# Notificação de agendamento por WhatsApp ou SMS (Twilio)
+# Desabilitado por padrão: sem credenciais, a mensagem só aparece no log.
+# Credenciais via variáveis de ambiente (não coloque tokens no código/Git).
+# ---------------------------------------------------------------------------
+notificacao:
+  habilitado: ${NOTIFICACAO_HABILITADO:false}
+  canal: ${NOTIFICACAO_CANAL:WHATSAPP}      # WHATSAPP ou SMS
+  nome-barbearia: ${NOTIFICACAO_NOME_BARBEARIA:Barbearia Julius}
+  twilio:
+    account-sid: ${TWILIO_ACCOUNT_SID:}
+    auth-token: ${TWILIO_AUTH_TOKEN:}
+    from: ${TWILIO_FROM:}                   # ex.: +14155238886 (sandbox WhatsApp) ou seu número SMS
+    template-sid: ${TWILIO_TEMPLATE_SID:}   # opcional (WhatsApp em produção): HXxxxxxxxx
